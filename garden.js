@@ -255,7 +255,7 @@
   let rows = [[], [], []], all = [], planted = [];
   let grass = [null, [], [], []], stars = [], flies = [];
   const petals = [];
-  let wind = 0, last = 0, ambientTimer = 2;
+  let wind = 0, last = 0, ambientTimer = 2, perfAcc = 0, perfN = 0;
 
   function makeFlower(row, nx, type, hk) {
     const range = H_RANGE[row];
@@ -330,10 +330,11 @@
   }
 
   /* ---------- tamaño ---------- */
-  function resize() {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let dprCap = 2;                    // baja sola si el teléfono va lento (ver frame)
+  function resize(force) {
+    const dpr = Math.min(window.devicePixelRatio || 1, dprCap);
     const w = window.innerWidth, h = window.innerHeight;
-    if (w === W && h === H && dpr === DPR) return;
+    if (!force && w === W && h === H && dpr === DPR) return;
     W = w; H = h; DPR = dpr;
     canvas.width = Math.round(W * DPR);
     canvas.height = Math.round(H * DPR);
@@ -573,8 +574,18 @@
     requestAnimationFrame(frame);
     if (!W || !U) return;
     const t = now / 1000;
-    const dt = Math.min(0.05, (now - last) / 1000 || 0.016);
+    const raw = (now - last) / 1000;
+    const dt = Math.min(0.05, raw || 0.016);
     last = now;
+
+    // Calidad adaptable: si tras el arranque va a menos de ~30 fps, bajamos la resolución del lienzo
+    if (started && now - startTime > 3500 && raw > 0 && raw < 0.25) {
+      perfAcc += raw; perfN++;
+      if (perfN >= 90) {
+        if (perfAcc / perfN > 0.034 && dprCap > 1) { dprCap = Math.max(1, dprCap - 0.5); resize(true); }
+        perfAcc = 0; perfN = 0;
+      }
+    }
 
     skyMix += (smooth(0.08, 0.95, progress) - skyMix) * (1 - Math.exp(-dt * 1.6));
     const m = skyMix;
@@ -637,7 +648,7 @@
   /* ---------- arranque ---------- */
   resize();
   seed();
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', () => resize());
   requestAnimationFrame(frame);
 
   window.Garden = {
