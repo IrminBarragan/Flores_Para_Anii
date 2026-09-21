@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Para Anii 🌻</title>
+  <meta name="description" content="Hoy es día de flores amarillas… y este jardín es solo para ti.">
+  <meta name="theme-color" content="#120c36">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Para Anii 🌻">
+  <meta property="og:description" content="Hoy es día de flores amarillas… y este jardín es solo para ti.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%BB%3C/text%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="locked">
+
+  <!-- Símbolos SVG (el girasol se genera en main.js) -->
+  <svg id="defs" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"></svg>
+
+  <!-- El jardín animado -->
+  <canvas id="garden" aria-hidden="true"></canvas>
+
+  <!-- Botón de música y avisos -->
+  <button id="musicBtn" class="round-btn" type="button" aria-label="Silenciar música" hidden>
+    <svg class="ic-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10v4h4l5 4V6L7 10H3z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    <svg class="ic-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10v4h4l5 4V6L7 10H3z" fill="currentColor"/><path d="M16 9l5 6M21 9l-5 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  </button>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- Contenido que se desliza sobre el jardín -->
+  <main id="story">
+
+    <section class="hero" id="hero">
+      <h1 class="name" id="heroName"></h1>
+      <p class="sub" id="heroSub"></p>
+      <a class="cue" href="#letter"><span id="heroCue"></span><i class="chev" aria-hidden="true"></i></a>
+    </section>
+
+    <section class="letter" id="letter">
+      <article class="card letter-card" id="letterCard"></article>
+    </section>
+
+    <section class="reasons" id="reasons">
+      <div class="card">
+        <h2 id="reasonsTitle"></h2>
+        <p class="hint" id="reasonsHint"></p>
+        <div class="rgrid" id="rgrid"></div>
+        <p class="rtext" id="rtext" aria-live="polite"></p>
+        <p class="rcount" id="rcount"></p>
+        <p class="rall" id="rall"></p>
+      </div>
+    </section>
+
+    <section class="together" id="together" hidden>
+      <div class="card">
+        <h2 id="togetherTitle"></h2>
+        <div class="clock" id="clock"></div>
+        <p class="foot" id="togetherFoot"></p>
+      </div>
+    </section>
+
+    <section class="finale" id="finale">
+      <h2 id="finalTitle"></h2>
+      <p class="final-text" id="finalText"></p>
+      <button class="btn" id="plantBtn" type="button"></button>
+    </section>
+
+  </main>
+
+  <!-- Modo "sembrar libremente" -->
+  <div id="freeUI" class="free-ui" aria-hidden="true">
+    <p id="freeHint"></p>
+    <button class="btn ghost" id="backBtn" type="button"></button>
+  </div>
+
+  <!-- Pantalla de bienvenida -->
+  <div id="intro" class="intro">
+    <div class="intro-inner">
+      <div class="ifw"><svg class="ifs" viewBox="0 0 100 100" aria-hidden="true"><use href="#sf"/></svg></div>
+      <h1 id="introTitle"></h1>
+      <p class="intro-text" id="introText"></p>
+      <button class="btn big" id="openBtn" type="button"></button>
+      <p class="intro-note" id="introNote"></p>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="music.js"></script>
+  <script src="garden.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
